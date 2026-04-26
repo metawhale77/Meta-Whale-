@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Meta-Whale Dashboard</title>
+    <style>
+        /* CSS - Styling */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Header */
+        .header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0a0a0a;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .balance-chip {
+            background: #1a1a1a;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #333;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #111;
+            margin: 10px;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .tab.active {
+            background: #222;
+            color: #fff;
+        }
+
+        /* Section Cards */
+        .section {
+            padding: 0 15px;
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        .service-item {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-box {
+            width: 35px;
+            height: 35px;
+            background: #1a1a1a;
+            border-radius: 8px;
+        }
+
+        /* Income Box */
+        .income-card {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .income-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            background: #111;
+            padding: 5px;
+            border-radius: 5px;
+            width: fit-content;
+        }
+
+        .it-btn {
+            font-size: 12px;
+            color: #666;
+            padding: 5px 10px;
+        }
+
+        .it-btn.active {
+            background: #222;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        /* Navigation Side Drawer (Hidden by default) */
+        #side-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100%;
+            background: #080808;
+            z-index: 100;
+            transition: 0.3s;
+            border-right: 1px solid #1a1a1a;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #111;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #ddd;
+        }
+
+        /* Level Cards (T&S Section) */
+        .level-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .level-card {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .btn-go {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Utility */
+        .purple-token {
+            color: #8a2be2; /* Same as recording */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <span style="font-size: 20px; font-weight: 500;">Home</span>
+        <div class="balance-chip">0.00 IGT <span style="color: #444; margin-left: 5px;">💼</span></div>
+        <div onclick="toggleMenu()" style="cursor: pointer;">☰</div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab">Explore</div>
+        <div class="tab active">Dashboard</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Services</div>
+        <div class="service-item">
+            <div class="service-info">
+                <div class="icon-box"></div>
+                <span>T&S</span>
+            </div>
+            <span>&rsaquo;</span>
+        </div>
+        <div class="service-item">
+            <div class="service-info">
+                <div class="icon-box"></div>
+                <span>W-DEX</span>
+            </div>
+            <span>&rsaquo;</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Total income</div>
+        <div class="income-card">
+            <div class="income-tabs">
+                <div class="it-btn">1 Week</div>
+                <div class="it-btn">1 Month</div>
+                <div class="it-btn active">All</div>
+            </div>
+            <div class="amount">$0</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">T&S Levels</div>
+        <div class="level-grid">
+            <div class="level-card">
+                <div style="font-size: 12px; color: #666;">LEVEL 1</div>
+                <div style="margin: 10px 0;">🔵</div>
+                <button class="btn-go">Go to</button>
+            </div>
+            <div class="level-card">
+                <div style="font-size: 12px; color: #666;">LEVEL 2</div>
+                <div style="margin: 10px 0;">🔵</div>
+                <button class="btn-go">Go to</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="side-menu">
+        <div style="padding: 20px; border-bottom: 1px solid #222;">
+            <div style="font-size: 18px;">My profile</div>
+            <div style="font-size: 12px; color: #555;">pZyVxAsNcs</div>
+        </div>
+        <div class="menu-item">Wallet</div>
+        <div class="menu-item">Notification</div>
+        <div class="menu-item">Home</div>
+        <div class="menu-item">Support</div>
+        <div class="menu-item" onclick="toggleMenu()" style="color: #ff4444;">Close Menu</div>
+    </div>
+
+    <script>
+        // Simple menu toggle function
+        function toggleMenu() {
+            var menu = document.getElementById('side-menu');
+            if (menu.style.left === '0px') {
+                menu.style.left = '-100%';
+            } else {
+                menu.style.left = '0px';
+            }
+        }
+    </script>
+</body>
+  </html>
+  
